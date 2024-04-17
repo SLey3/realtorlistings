@@ -37,7 +37,7 @@
   },
   "scripts": {
     "start": "npm run watch:css && vite",
-    "build": "npm run watch:css && tsc vite build",
+    "build": "npm run watch:css && vite build",
     "preview": "vite preview",
     "watch:css": "postcss src/assets/tw/tailwind.css -o src/assets/tw/index.css"
   },
