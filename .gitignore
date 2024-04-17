@@ -6,7 +6,6 @@ vendor/
 .pnp/
 .pnp.js
 package-lock.json
-composer.lock
 
 # testing
 /coverage

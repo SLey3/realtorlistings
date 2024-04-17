@@ -1,15 +1,12 @@
 {
-    "routes": [
-      {
-        "src": "/api/(.*)",
-        "dest": "https://your-backend.elasticbeanstalk.com/api/$1",
-        "headers": {
-          "x-custom-header": "value"
-        }
-      },
-      {
-        "src": "/(.*)",
-        "dest": "/$1"
-      }
-    ]
-  }
+  "routes": [
+    {
+      "src": "/api/(.*)",
+      "dest": "http://walrus-app-nojdx.ondigitalocean.app/api/$1"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "https://realtor-listings.com/$1"
+    }
+  ]
+}
