@@ -1590,9 +1590,6 @@ input[type="range"]::-ms-fill-lower {
 .cursor-grab {
   cursor: grab;
 }
-.cursor-none {
-  cursor: none;
-}
 .cursor-not-allowed {
   cursor: not-allowed;
 }

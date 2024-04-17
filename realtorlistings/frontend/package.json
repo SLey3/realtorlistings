@@ -7,7 +7,7 @@
     "@types/react-dom": "^18.2.25",
     "@vitejs/plugin-react-swc": "^3.6.0",
     "typescript": "^5.4.5",
-    "vite": "^5.2.8",
+    "vite": "^5.2.9",
     "vite-tsconfig-paths": "^4.3.2"
   },
   "dependencies": {
@@ -37,7 +37,7 @@
   },
   "scripts": {
     "start": "npm run watch:css && vite",
-    "build": "npm run watch:css && tsc && vite build",
+    "build": "npm run watch:css && tsc vite build",
     "preview": "vite preview",
     "watch:css": "postcss src/assets/tw/tailwind.css -o src/assets/tw/index.css"
   },
