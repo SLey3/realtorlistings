@@ -25,7 +25,7 @@
         }
 
         public function connect() {
-            $conn = mysqli_connect($this->server, $this->user, $this->pass, 'realtorlistingsdb', $this->port);
+            $conn = mysqli_connect($this->server, $this->user, $this->pass, $_ENV["AWS_DATABASE_NAME"], $this->port);
 
             if (mysqli_connect_errno()) {
                 return 503; // HTTP code for Service unavailable
