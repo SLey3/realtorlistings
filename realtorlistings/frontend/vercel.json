@@ -1,0 +1,15 @@
+{
+    "routes": [
+      {
+        "src": "/api/(.*)",
+        "dest": "https://your-backend.elasticbeanstalk.com/api/$1",
+        "headers": {
+          "x-custom-header": "value"
+        }
+      },
+      {
+        "src": "/(.*)",
+        "dest": "/$1"
+      }
+    ]
+  }

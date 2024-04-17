@@ -1,0 +1,26 @@
+{
+    "name": "realtorlistings/api",
+    "description": "api backend for Real Estate Listings website",
+    "type": "backend",
+    "license": "MIT",
+    "autoload": {
+        "psr-4": {
+            "realtorlistings\\api\\": "."
+        }
+    },
+    "authors": [
+        {
+            "name": "Sergio Ley Languren",
+            "email": "sley@willamette.edu"
+        }
+    ],
+    "require": {
+        "slim/slim": "4.*",
+        "slim/psr7": "^1.6",
+        "vlucas/valitron": "^1.4",
+        "phpmailer/phpmailer": "^6.9",
+        "defuse/php-encryption": "^2.4",
+        "firebase/php-jwt": "^6.10",
+        "vlucas/phpdotenv": "^5.6"
+    }
+}

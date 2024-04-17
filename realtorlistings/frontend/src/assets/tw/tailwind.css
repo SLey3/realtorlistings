@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* custom styles */
+@layer components {
+    .card {
+        @apply flex flex-col justify-start space-y-2 w-[95lvw] lg:w-11/12 mx-2 my-2 border-2 border-l-8 border-slate-500 hover:border-l-sky-400 hover:border-sky-200;
+    }
+
+    .card-row {
+        @apply flex flex-row m-3 py-2;
+    }
+
+    .card-body {
+        @apply flex flex-col lg:flex-row flex-wrap lg:justify-evenly w-full p-4 space-y-3 mb-20;
+    }
+
+    .card-thumbnail-sep {
+        @apply size-60 m-1 p-2;
+    }
+
+    .card-title-txt {
+        @apply font-extrabold text-4xl text-wrap text-slate-600 leading-relaxed dark:text-white underline underline-offset-4 capitalize decoration-2 decoration-slate-800 dark:decoration-slate-100;
+    }
+}
