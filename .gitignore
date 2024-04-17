@@ -15,6 +15,7 @@ composer.lock
 /build
 
 # misc
+
 .DS_Store
 .env
 .env.local
