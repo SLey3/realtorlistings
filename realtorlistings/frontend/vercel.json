@@ -1,1 +1,5 @@
-{}
+{
+  "routes": [
+    { "src" : "/api/(.*)", "dest" : "https://walrus-app-nojdx.ondigitalocean.app/api/$1"}
+  ]
+}

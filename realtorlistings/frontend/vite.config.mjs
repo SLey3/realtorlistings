@@ -9,11 +9,11 @@ export default defineConfig({
     server: {    
         // this ensures that the browser opens upon server start
         open: true,
-        // this sets a default port to 8000  
+        // this sets a default port to 3000  
         port: 3000, 
         proxy: {
             '/api' : {
-                target: 'http://walrus-app-nojdx.ondigitalocean.app',
+                target: 'http://walrus-app-nojdx.ondigitalocean.app:8000',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, ''),
             }

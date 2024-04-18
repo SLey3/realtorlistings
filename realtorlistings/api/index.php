@@ -40,7 +40,7 @@
     $app->add(function ($request, $handler) {
         $response = $handler->handle($request);
         return $response
-                ->withHeader('Access-Control-Allow-Origin', '*')
+                ->withHeader('Access-Control-Allow-Origin', 'https://www.realtor-listings.com, https://realtorlistings-frontend-git-main-sergio-leys-projects.vercel.app')
                 ->withHeader('Access-Control-Allow-Headers', 'X-Requested-With, Content-Type, Accept, Origin, Authorization')
                 ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     });
@@ -156,7 +156,7 @@
         $token = JWT::encode(["data" => $jwt_payload, "expiration_time" => $expiration], "decidelater", 'HS256');
 
 
-        $temp_url = "http:/localhost:3000/confirmacc/$token";
+        $temp_url = "https://www.realtor-listings.com/confirmacc/$token";
 
         $name = $data["name"];
         $mail_body = "
