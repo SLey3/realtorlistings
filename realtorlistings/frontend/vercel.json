@@ -1,12 +1,1 @@
-{
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "http://walrus-app-nojdx.ondigitalocean.app/api/$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "https://realtor-listings.com/$1"
-    }
-  ]
-}
+{}
