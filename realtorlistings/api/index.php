@@ -45,6 +45,11 @@
                 ->withHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, PATCH, OPTIONS');
     });
 
+    $app->get("/", function(Request $request, Response $response, array $args) {
+        $response->getBody()->write("<b>Access Denied</b> Forbidden Access. Please go the correct route: <a href='https://www.realtor-listings.com'>Realtor Listings</a>");
+        return $response;
+    });
+
     $app->post("/login", function(Request $request, Response $response, array $args) use ($db_503_or_success, $conn) {
         /* The purpose of this api route is to get and authenticate the user info from the mysql database and arrange it so that it will be used as
         the user cookie for the session */
