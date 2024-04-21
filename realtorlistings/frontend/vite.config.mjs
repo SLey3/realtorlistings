@@ -13,7 +13,7 @@ export default defineConfig({
         port: 3000, 
         proxy: {
             '/api' : {
-                target: 'http://walrus-app-nojdx.ondigitalocean.app:8000',
+                target: 'https://api.realtor-listings.com',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, ''),
             }
