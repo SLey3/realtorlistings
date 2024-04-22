@@ -5,6 +5,7 @@ import axios, { AxiosResponse } from "axios";
 
 
 interface Listing {
+    id: number;
     address: string;
     property_name: string;
     country: string;
@@ -66,35 +67,35 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing }) => {
 
     return (
         <>
-            <div id="card-1" className="card">
+            <div id={`card-${listing.id}`} className="card">
                 <div className="mb-3 lg:card-row">
                     <div id="thumbnail-" className="card-thumbnail-sep">
                         <img src={img} alt={listing.property_name} className="backdrop-brightness-125 backdrop-contrast-150 backdrop-opacity-5 backdrop-saturate-125" />
                     </div>
-                    <div id="title-" className="ml-6">
+                    <div id={`title-${listing.id}`} className="ml-6">
                         <h3 className="card-title-txt">{listing.property_name}</h3>
                     </div>
                 </div>
-                <div id="content-" className="card-body">
+                <div id={`content-${listing.id}`} className="card-body">
                     <div className="flex flex-col max-w-[136px]">
                         <h6 className="text-sm font-semibold underline text-slate-600 dark:text-white leading-tight">Address:</h6>
-                        <p id="addr-" className="text-xs leading-snug indent-2 text-slate-400 dark:text-white truncate">{listing.address}</p>
+                        <p id={`addr-${listing.id}`} className="text-xs leading-snug indent-2 text-slate-400 dark:text-white truncate">{listing.address}</p>
                     </div>
                     <div className="flex flex-col">
                         <h6 className="text-sm font-semibold underline text-slate-600 dark:text-white leading-tight">Country:</h6>
-                        <p id="country-" className="text-xs truncate leading-snug indent-2 text-slate-400 dark:text-white">{listing.country}</p>
+                        <p id={`country-${listing.id}`} className="text-xs truncate leading-snug indent-2 text-slate-400 dark:text-white">{listing.country}</p>
                     </div>
                     <div className="flex flex-col">
                         <h6 className="text-sm font-semibold underline text-slate-600 dark:text-white leading-tight">Realtor:</h6>
-                        <p id="realtor-" className="text-xs truncate leading-snug indent-2 text-slate-400 dark:text-white">{listing.realtor}</p>
+                        <p id={`realtor-${listing.id}`} className="text-xs truncate leading-snug indent-2 text-slate-400 dark:text-white">{listing.realtor}</p>
                     </div>
                     <div className="flex flex-col">
                         <h6 className="text-sm font-semibold underline text-slate-600 dark:text-white leading-tight">Agency:</h6>
-                        <p id="country-"className="text-xs truncate leading-snug indent-2 text-slate-400 dark:text-white">{listing.agency}</p>
+                        <p id={`agency-${listing.id}`} className="text-xs truncate leading-snug indent-2 text-slate-400 dark:text-white">{listing.agency}</p>
                     </div>
                     <div className="flex flex-col">
                         <h6 className="text-sm font-semibold underline text-slate-600 dark:text-white leading-tight">Price</h6>
-                        <p id="price-" className="text-xs truncate leading-snug indent-2 text-slate-400 dark:text-white">${listing.price}</p>
+                        <p id={`price-${listing.id}`} className="text-xs truncate leading-snug indent-2 text-slate-400 dark:text-white">${listing.price}</p>
                     </div>
                     <div className="flex flex-col">
                         <h6 className="mb-2 text-sm font-semibold underline text-slate-600 dark:text-white leading-tight">Tags:</h6>
@@ -107,7 +108,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing }) => {
                         </div>
                     </div>
                 </div>
-                <div id="link-" className="flex flex-row-reverse">
+                <div id={`link-${listing.id}`} className="flex flex-row-reverse">
                     <a href="#" className="no-underline hover:underline hover:decoration-sky-400 mr-3 mb-3 p-px after:content-['_↗'] align-top text-base font-extralight text-gray-600 hover:text-sky-400 dark:text-white align-end">See Listing (Coming Soon)</a>
                 </div>
             </div>
