@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Label, Button } from 'flowbite-react';
 import NavigationBar from './Navbar';
 import { useCookies } from 'react-cookie';
+import { Link } from 'react-router-dom';
 import axios, { AxiosResponse } from 'axios';
 
 
@@ -151,6 +152,9 @@ const Register: React.FC = () => {
                         <Button size="xs" color="light" className="relative w-1/2 border-0 left-1/4 ps-3 bg-inherit hover:text-sky-300" onClick={() => changePanel("prev")}>Previous</Button>
                     </div>
                 </form>
+                <div className="p-3 mb-5">
+                    <Link to="/login" className="block max-w-sm p-1 mx-auto text-gray-900 hover:text-cyan-500 dark:hover:text-cyan-200 dark:text-gray-300">Have an account? Login</Link>
+                </div>
             </div>
         </>
     )

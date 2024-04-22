@@ -1,5 +1,6 @@
 import React from "react";
 import { useCookies } from "react-cookie";
+import { Link } from "react-router-dom";
 import NavigationBar from "./Navbar";
 
 
@@ -31,12 +32,12 @@ const MyDashboard: React.FC = () => {
                     <div className="bg-gray-200 p-4 rounded-lg">
                         <h2 className="text-xl font-bold">My Listings</h2>
                         <p className="text-sm">Manage your listings</p>
-                        <a href="/dashboard/listings" className="bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block">Manage Listings</a>
+                        <Link to="/dashboard/listings" className="bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block">Manage Listings</Link>
                     </div>
                     <div className="bg-gray-200 p-4 rounded-lg">
                         <h2 className="text-xl font-bold">Create Listing</h2>
                         <p className="text-sm">Create a new listing</p>
-                        <a href="/listings/create" className="bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block">Create Listing</a>
+                        <Link to="/listings/create" className="bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block">Create Listing</Link>
                     </div>
                 </div>
             </div>
@@ -45,7 +46,7 @@ const MyDashboard: React.FC = () => {
                     <div className="bg-gray-200 p-4 rounded-lg">
                         <h2 className="text-xl font-bold">My Account</h2>
                         <p className="text-sm">Manage your account</p>
-                        <a href="#" className="bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block">Manage Account (Coming Soon)</a>
+                        <Link to="#" className="bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block">Manage Account (Coming Soon)</Link>
                     </div>
                 </div>
             </div>
