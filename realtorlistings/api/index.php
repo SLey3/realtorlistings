@@ -527,6 +527,18 @@
                 mysqli_query($conn, $query);
             }
 
+            if (isset($data['address2']) && !isset($data['address'])) {
+                $address2 = $data['address2'];
+
+                $address_query = "SELECT `address` FROM `listings` WHERE `id` = $listing_id";
+                $address1 = mysqli_fetch_assoc(mysqli_query($conn, $address_query))['address'];
+
+                $address = $address1 . " " . $address2;
+    
+                $query = "UPDATE `listings` SET `address` = '$address' WHERE `id` = $listing_id";
+                mysqli_query($conn, $query);
+            }
+
             if (isset($data['town'])) {
                 $town = $data['town'];
     
