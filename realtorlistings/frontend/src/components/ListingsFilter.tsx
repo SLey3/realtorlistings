@@ -47,7 +47,7 @@ const ListingsFilters: React.FC<FilterProps> = ({ handleSubmit }) => {
 
     function handleFilterClick (e: React.MouseEvent<HTMLElement>)  {
         e.preventDefault();
-        const filters = [];
+        const filters: any[] = [];
 
         if (country !== 'default') {
             filters.push({"country" : country});
