@@ -11,13 +11,13 @@ export default defineConfig({
         open: true,
         // this sets a default port to 3000  
         port: 3000, 
-        proxy: {
-            '/api' : {
-                target: 'https://api.realtor-listings.com',
-                changeOrigin: true,
-                rewrite: (path) => path.replace(/^\/api/, ''),
-            }
-        }
+        // proxy: {
+        //     '/api' : {
+        //         target: 'https://api.realtor-listings.com',
+        //         changeOrigin: true,
+        //         rewrite: (path) => path.replace(/^\/api/, ''),
+        //     }
+        // }
     },
     build: {
         chunkSizeWarningLimit: 1000,
