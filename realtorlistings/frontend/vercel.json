@@ -1,6 +1,6 @@
 {
-  "routes": [
-    { "src" : "/api/(.*)", "dest" : "https://api.realtor-listings.com/$1"},
-    { "src": "/[^.]+", "dest": "/", "status": 200 }
+  "rewrites": [
+    { "source" : "/api/(.*)", "destination" : "https://api.realtor-listings.com/$1"},
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
