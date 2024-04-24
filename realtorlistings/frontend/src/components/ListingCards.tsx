@@ -59,7 +59,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing }) => {
         .finally(() => {
             setLoading(false);
         });
-    }, [listing.address])
+    }, [listing.address]);
 
     if (loading) {
         return <div className="dark:text-white text-4xl transition-opacity duration-300 animate-pulse">Loading...</div>; // Render loading indicator while waiting for data
