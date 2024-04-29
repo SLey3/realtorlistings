@@ -32,6 +32,7 @@
     # Backend API for React routes
     $app = AppFactory::create();
     $app->addBodyParsingMiddleware();
+    $app->addRoutingMiddleware();
 
     $app->options('/{routes:.+}', function (Request $request, Response $response, array $args) {
         return $response;
