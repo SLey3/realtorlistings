@@ -10,7 +10,7 @@ const ConfirmAccount: React.FC = () => {
 
     useEffect(() => {
         confirmAccount();
-    }, [params]);
+    }, []);
 
     const confirmAccount = () => {
         axios.post(`/api/confirmacc`, {
