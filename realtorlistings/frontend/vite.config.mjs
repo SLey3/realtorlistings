@@ -4,7 +4,7 @@ import viteTsconfigPaths from 'vite-tsconfig-paths';
 
 export default defineConfig({
 
-    base: '',
+    base: './',
     plugins: [react(), viteTsconfigPaths()],
     server: {    
         // this ensures that the browser opens upon server start
