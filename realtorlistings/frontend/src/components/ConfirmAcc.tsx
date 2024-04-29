@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import NavigationBar from './Navbar';
 import axios, { AxiosResponse } from 'axios';
@@ -8,21 +8,15 @@ const ConfirmAccount: React.FC = () => {
     const params = useParams();
     let [ expired_or_not, setStatus ] = useState('Processing...');
 
-    useEffect(() => {
-        confirmAccount();
-    }, []);
-
-    const confirmAccount = () => {
-        axios.post(`/api/confirmacc`, {
-            'jwt': params.ciphered
-        })
-        .then(function(res: AxiosResponse){
-            setStatus(res.data.success);
-        })
-        .catch(function(err){
-            setStatus(err.response.data.expired);
-        });
-    }
+    axios.post(`/api/confirmacc`, {
+        'jwt': params.ciphered
+    })
+    .then(function(res: AxiosResponse){
+        setStatus(res.data.success);
+    })
+    .catch(function(err){
+        setStatus(err.response.data.expired);
+    });
 
 
     return (
