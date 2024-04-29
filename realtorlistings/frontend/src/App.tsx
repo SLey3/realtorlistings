@@ -19,12 +19,12 @@ function App() {
         <Route path='/about' Component={About} />
         <Route path="/login" Component={Login} />
         <Route path="/register" Component={Register} />
-        <Route path="/confirmacc/:ciphered" Component={ConfirmAccount} />
+        <Route path="/confirmacc/:ciphered" element={<ConfirmAccount />} />
         <Route path="/listings" Component={Listings} />
         <Route path="/listings/create" Component={CreateListing} />
         <Route path="/dashboard" Component={MyDashboard} />
         <Route path="/dashboard/listings" Component={ManageListings} />
-        <Route path="/dashboard/listings/edit/:id" Component={EditListing} />
+        <Route path="/dashboard/listings/edit/:id" element={<EditListing />} />
       </Routes>
     </Router>
   );
