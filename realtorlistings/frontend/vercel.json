@@ -1,6 +1,6 @@
 {
   "rewrites": [
     { "source" : "/api/(.*)", "destination" : "https://api.realtor-listings.com/$1"},
-    { "source": "/(.*)", "destination": "/" }
+    { "source": "/(.*)", "destination": "/index.html" }
   ]
 }
