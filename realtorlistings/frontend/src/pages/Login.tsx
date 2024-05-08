@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, redirect } from 'react-router-dom';
 import { Label } from 'flowbite-react';
-import NavigationBar from './Navbar';
+import NavigationBar from '../components/Navbar';
 import { useCookies } from 'react-cookie';
 import axios, { AxiosResponse } from 'axios';
 

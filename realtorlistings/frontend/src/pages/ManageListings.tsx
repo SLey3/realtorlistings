@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
-import NavigationBar from "./Navbar";
+import NavigationBar from "../components/Navbar";
 import axios, { AxiosResponse } from "axios";
 
 

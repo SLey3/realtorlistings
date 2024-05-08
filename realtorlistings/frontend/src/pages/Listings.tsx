@@ -5,9 +5,9 @@ import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import $ from 'jquery';
 import { useCookies } from 'react-cookie';
-import ListingsFilters from './ListingsFilter';
-import ListingCard from './ListingCards';
-import NavigationBar from './Navbar';
+import ListingsFilters from '../components/ListingsFilter';
+import ListingCard from '../components/ListingCards';
+import NavigationBar from '../components/Navbar';
 import axios, { AxiosResponse } from 'axios';
 
 const Listings: React.FC = () => {

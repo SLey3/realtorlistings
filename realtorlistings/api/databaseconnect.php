@@ -3,12 +3,12 @@
      * Class for Database connection
      */
     // only for development
-    // use Dotenv\Dotenv;
+    use Dotenv\Dotenv;
 
-    // require __DIR__.'/vendor/autoload.php';
+    require __DIR__.'/vendor/autoload.php';
 
-    // $dotenv = Dotenv::createImmutable(__DIR__);
-    // $dotenv->load();
+    $dotenv = Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
 
     class MySQLConnect {
         private $server;

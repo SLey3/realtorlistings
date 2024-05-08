@@ -2,13 +2,13 @@
     use PHPMailer\PHPMailer\PHPMailer;
     use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
-    //use Dotenv\Dotenv;
+    use Dotenv\Dotenv;
 
 
     require __DIR__.'/vendor/autoload.php';
     // only for development
-    // $dotenv = Dotenv::createImmutable(__DIR__);
-    // $dotenv->load();
+    $dotenv = Dotenv::createImmutable(__DIR__);
+    $dotenv->load();
 
     class MailerHandler {
         private $mailer;

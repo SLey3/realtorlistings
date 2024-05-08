@@ -1,8 +1,8 @@
 import React from 'react';
-import NavigationBar from './Navbar';
+import NavigationBar from '../components/Navbar';
 import { Accordion } from 'flowbite-react';
 import { Link } from 'react-router-dom';
-import { LoginLink } from './AuthComponents';
+import { LoginLink } from '../components/AuthComponents';
 
 
 const About: React.FC = () => {

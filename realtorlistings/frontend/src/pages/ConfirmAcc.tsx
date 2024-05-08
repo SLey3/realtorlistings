@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import NavigationBar from './Navbar';
+import NavigationBar from '../components/Navbar';
 import axios, { AxiosResponse } from 'axios';
 
 

@@ -7,8 +7,8 @@ import { FloatingLabel,
          Textarea,
          Button } from 'flowbite-react';
 import { useCookies } from 'react-cookie';
-import NavigationBar from './Navbar';
-import TagInput from './tagInput';
+import NavigationBar from '../components/Navbar';
+import TagInput from '../components/tagInput';
 import axios from 'axios';
 import countries from '../assets/data/countries';
 import states from '../assets/data/states';

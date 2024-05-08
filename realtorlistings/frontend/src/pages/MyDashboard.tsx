@@ -1,7 +1,7 @@
 import React from "react";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
-import NavigationBar from "./Navbar";
+import NavigationBar from "../components/Navbar";
 
 
 const MyDashboard: React.FC = () => {
