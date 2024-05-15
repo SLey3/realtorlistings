@@ -285,7 +285,7 @@ const EditListing: React.FC = () => {
                     <div className="p-px">
                         <Label htmlFor="price" className="text-slate-500 mb-2 dark:text-white">Price</Label>
                         <div className="flex flex-col gap-y-2 lg:flex-row lg:gap-x-5">
-                            <TextInput id="price" name="price" type="text" placeholder={`$${(listing as Listing).price}`} value={price} onChange={(e) => {setPrice(e.target.value)}} className="min-w-28 md:w-1/2 lg:w-full" disabled />
+                            <TextInput id="price" name="price" type="text" placeholder={`$${(listing as Listing).price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`} value={price} onChange={(e) => {setPrice(e.target.value.replace(/[^0-9.-]/g, ''))}} className="min-w-28 md:w-1/2 lg:w-full" disabled />
                             <Button color="light" onClick={(e: React.MouseEvent<HTMLElement>) => {handleEditClick(e, "price")}}>
                                 Edit
                             </Button>

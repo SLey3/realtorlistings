@@ -54,6 +54,10 @@ const Register: React.FC = () => {
             }
         })
         .then(function(res: AxiosResponse){
+            if (error) {
+                setErrors(null);
+            }
+
             setSuccess(res.data.success);
         })
         .catch(function(err){
@@ -79,8 +83,7 @@ const Register: React.FC = () => {
 
                 setErrors(error_list);
             } else if (err.response.data.server_error) {
-                console.log(err.response.data.server_error); // console error for debugging purposes should it happen
-                setErrors("503: Server Error Occurred. Please try again later and/or report the issue to us");
+                setErrors((<li className="text-sm font-light tracking-tight hover:text-red-700">{err.response.data.server_error}</li>));
             }
         });
     }
@@ -102,30 +105,30 @@ const Register: React.FC = () => {
                         <Label htmlFor="username" className="block mb-2 text-sm font-medium text-center text-gray-900 dark:text-white">
                             Username <span className="text-red-600">*</span>
                         </Label>
-                        <input type="email" id="username" placeholder="name@email.com" value={username} onChange={(e) => {setUsername(e.target.value)}}
+                        <input type="email" id="username" name="username" placeholder="name@email.com" value={username} onChange={(e) => {setUsername(e.target.value)}}
                         className="bg-gray-50 mb-5 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ps-32 
                         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                         <Label htmlFor="name" className="block mb-2 text-sm font-medium text-center text-gray-900 dark:text-white">
                             Name <span className="text-red-600">*</span>
                         </Label>
-                        <input type="text" id="name" value={name} onChange={(e) => {setName(e.target.value)}}
+                        <input type="text" id="name" value={name} name="name" onChange={(e) => {setName(e.target.value)}}
                         className="bg-gray-50 border border-gray-300 mb-5 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ps-32 
-                        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                         <Button size="lg" color="blue" className="w-full mb-2" pill onClick={() => changePanel("nxt")}>Next</Button>
                     </div>
                     <div className={`p-3 ${currentPanel === 2 ? 'block' : 'hidden'}`}>
                         <Label htmlFor="pwd" className="block mb-2 text-sm font-medium text-center text-gray-900 dark:text-white">
                             Password <span className="text-red-600">*</span>
                         </Label>
-                        <input type="password" id="pwd" value={password} onChange={(e) => {setPassword(e.target.value)}}
+                        <input type="password" id="pwd" value={password} name="password" onChange={(e) => {setPassword(e.target.value)}}
                         className="bg-gray-50 border border-gray-300 mb-5 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ps-32 
-                        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                         <Label htmlFor="confirm-pwd" className="block mb-2 text-sm font-medium text-center text-gray-900 dark:text-white">
                             Confirm Password <span className="text-red-600">*</span>
                         </Label>
-                        <input type="password" id="confirm-pwd" value={confirmPwd} onChange={(e) => {setConfirmPwd(e.target.value)}}
+                        <input type="password" id="confirm-pwd" value={confirmPwd} name="confirm-password" onChange={(e) => {setConfirmPwd(e.target.value)}}
                         className="bg-gray-50 border border-gray-300 mb-5 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ps-32 
-                        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+                        dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
                         <Button size="lg" color="blue" className="w-full" pill onClick={() => changePanel("nxt")}>Next</Button>
                         <Button size="xs" color="light" className="relative w-1/2 mt-2 border-0 left-1/4 ps-3 bg-inherit hover:text-sky-300" onClick={() => changePanel("prev")}>Previous</Button>
                     </div>
@@ -133,7 +136,7 @@ const Register: React.FC = () => {
                         <Label htmlFor="role" className="block mb-2 text-sm font-medium text-center text-gray-900 dark:text-white">
                             Role <span className="text-red-600">*</span>
                         </Label>
-                        <select id="role" onChange={(e) => {setRole(e.target.value)}} 
+                        <select id="role" name="role" onChange={(e) => {setRole(e.target.value)}} 
                         className="block mb-5 py-2.5 px-0 w-full text-sm text-gray-500 bg-transparent border-0 border-b-2 border-gray-200 appearance-none 
                         dark:text-gray-400 dark:border-gray-700 focus:outline-none focus:ring-0 focus:border-gray-200 peer" defaultValue="client" required>
                             <option disabled aria-disabled="true">Choose a role</option>
@@ -143,7 +146,7 @@ const Register: React.FC = () => {
                         <Label htmlFor="realtor-agency" className="block mb-2 text-sm font-medium text-center text-gray-900 dark:text_white">
                             Your Agency {role === 'realtor' ? <span className="text-red-600">*</span> : ''}
                         </Label>
-                        <input type="text" id="realtor-agency" value={agency} onChange={(e) => {setAgency(e.target.value)}}
+                        <input type="text" id="realtor-agency" name="agency" value={agency} onChange={(e) => {setAgency(e.target.value)}}
                         className="bg-gray-50 border border-gray-300 mb-5 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ps-32 
                         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" disabled={role === 'client'} required={role === 'realtor'} />
                         <input type="submit" placeholder="Create Account" className="group flex items-center justify-center p-2 text-center font-medium relative 

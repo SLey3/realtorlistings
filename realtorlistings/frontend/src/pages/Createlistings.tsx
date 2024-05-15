@@ -47,7 +47,7 @@ const CreateListing: React.FC = () => {
             state: state,
             country: country,
             type: property_type,
-            price: price,
+            price: parseInt(price),
             url: url,
             tags: tags,
             desc: desc
@@ -199,7 +199,7 @@ const CreateListing: React.FC = () => {
                         <FloatingLabel id="property-status-input" variant="outlined" label="Property Status" value="sale" disabled />
                     </div>
                     <div id="price">
-                        <FloatingLabel id="price-input" variant="outlined" label="Price" value={price} onChange={(e) => {setPrice(e.target.value)}} required />
+                        <FloatingLabel id="price-input" variant="outlined" label="Price" value={price} onChange={(e) => {setPrice(e.target.value.replace(/[^0-9.-]/g, ''))}} required />
                     </div>
                     <div id="url">
                         <FloatingLabel id="url" variant="outlined" label="Listing Url on Agency Website" value={url} onChange={(e) => {setUrl(e.target.value)}} required />

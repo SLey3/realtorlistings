@@ -32,30 +32,31 @@ const Listings: React.FC = () => {
         }
     }
 
-    function handleFilterSubmit(e: React.MouseEvent<HTMLElement>, filters: string[]) {
+    function handleFilterSubmit(e: React.MouseEvent<HTMLElement>, filters: object[], reset: boolean = false) {
         e.preventDefault();
-        console.log(filters);
-        if(filters.length == 0) { 
-            axios.get('/api/listings')
+
+        if (reset) { 
+            axios.post('/api/listings/filter')
             .then((res) => {
                 setListings(res.data.listings);
             })
             .catch((err) => {
                 console.log(err);
             });
+            return
+        } else {
+            axios.post('/api/listings/filter', {filters: filters}, {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then((res: AxiosResponse) => {
+                setListings(res.data.listings);
+            })
+            .catch((err) => {
+                console.log(err);
+            });   
         }
-
-        axios.post('/api/listings/filter', {filters: filters}, {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        })
-        .then((res: AxiosResponse) => {
-            setListings(res.data.listings);
-        })
-        .catch((err) => {
-            console.log(err);
-        });
     }
 
     function handleSearchSubmit (e: React.FormEvent<HTMLFormElement>) {
@@ -71,15 +72,14 @@ const Listings: React.FC = () => {
         .catch((err) => {
             // do nothing
         });
-        console.log(listings);
     }, []);
 
     return (
         <>
             <NavigationBar />
             <div className='flex flex-row justify-start gap-x-28 mb-10 dark:mt-10'>
-                <Button className="ml-3 lg:ml-10" gradientMonochrome="cyan" onClick={handleFilterClick} pill disabled>
-                    {filterStatus? 'Hide Filters' : 'Show Filters (coming soon)'}
+                <Button className="ml-3 lg:ml-10" gradientMonochrome="cyan" onClick={handleFilterClick} pill>
+                    {filterStatus? 'Hide Filters' : 'Show Filters'}
                 </Button>
                 {cookies.user.role == 'realtor' ? <Button gradientMonochrome="cyan" pill>
                     <Link to="/listings/create">
@@ -91,7 +91,7 @@ const Listings: React.FC = () => {
             <div id="search-panel">
                 <form id="search" onSubmit={handleSearchSubmit} className="m-3 ml-10">
                     <div className="flex flex-row">
-                        <FloatingLabel id="search" className="w-44 lg:w-[56rem]" variant="standard" sizing="sm" label="Search Address... (coming soon...)" type="search" value={searchInput} onChange={(e) => {setSearchInput(e.target.value)}} disabled />
+                        <FloatingLabel id="search" className="w-44 lg:w-[56rem]" variant="standard" sizing="sm" label="Search Address... (coming soon...)" type="search" value={searchInput} onChange={(e) => {setSearchInput(e.target.value)}} />
                         <button type="submit" className="bg-transparent text-slate-300 hover:text-cyan-200 translate-x-2">
                             <FaSearch />
                         </button>
@@ -102,9 +102,9 @@ const Listings: React.FC = () => {
                 <h2 className="text-4xl font-bold text-slate-500 dark:text-white">Listings:</h2>
             </div>
             <div id="cards" className="relative z-20 w-fit space-y-8 lg:w-3/4 h-full p-px">
-                {listings.map((listing) => (
+                {listings.length > 0 ? listings.map((listing) => (
                     <ListingCard key={x += 1} listing={listing} />
-                ))}
+                )) : (<p className="indent-4 text-2xl font-semibold dark:text-white p-8">No listings Found</p>)}
             </div>
         </>
     )

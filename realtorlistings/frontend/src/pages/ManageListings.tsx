@@ -130,7 +130,7 @@ const ManageListings: React.FC = () => {
                                             {listing.address}
                                         </td>
                                         <td className="px-6 py-4">
-                                            ${listing.price}
+                                            {`$${listing.price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
                                         </td>
                                         <td className="px-6 py-4">
                                             {listing.created_at}

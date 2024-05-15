@@ -67,7 +67,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing }) => {
 
     return (
         <>
-            <div id={`card-${listing.id}`} className="card">
+            <div id={`card-${listing.id}`} className="card" aria-label={`listing card ${listing.id}`}>
                 <div className="mb-3 lg:card-row">
                     <div id="thumbnail-" className="card-thumbnail-sep">
                         <img src={img} alt={listing.property_name} className="backdrop-brightness-125 backdrop-contrast-150 backdrop-opacity-5 backdrop-saturate-125" />
@@ -95,7 +95,7 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing }) => {
                     </div>
                     <div className="flex flex-col">
                         <h6 className="text-sm font-semibold underline text-slate-600 dark:text-white leading-tight">Price</h6>
-                        <p id={`price-${listing.id}`} className="text-xs truncate leading-snug indent-2 text-slate-400 dark:text-white">${listing.price}</p>
+                        <p id={`price-${listing.id}`} className="text-xs truncate leading-snug indent-2 text-slate-400 dark:text-white">${`${listing.price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                     </div>
                     <div className="flex flex-col">
                         <h6 className="mb-2 text-sm font-semibold underline text-slate-600 dark:text-white leading-tight">Tags:</h6>

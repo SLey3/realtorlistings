@@ -1,15 +1,15 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Home from './components/Home';
-import About from './components/About';
-import Login from './components/Login';
-import Register from './components/Register';
-import ConfirmAccount from './components/ConfirmAcc';
-import Listings from './components/Listings';
-import CreateListing from './components/Createlistings';
-import MyDashboard from './components/MyDashboard';
-import ManageListings from './components/ManageListings';
-import EditListing from './components/EditListing';
+import Home from './pages/Home';
+import About from './pages/About';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import ConfirmAccount from './pages/ConfirmAcc';
+import Listings from './pages/Listings';
+import CreateListing from './pages/Createlistings';
+import MyDashboard from './pages/MyDashboard';
+import ManageListings from './pages/ManageListings';
+import EditListing from './pages/EditListing';
 
 function App() {
   return (

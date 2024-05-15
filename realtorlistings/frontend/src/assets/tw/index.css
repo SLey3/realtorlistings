@@ -2704,6 +2704,9 @@ input[type="range"]::-ms-fill-lower {
 .indent-3 {
   text-indent: 0.75rem;
 }
+.indent-4 {
+  text-indent: 1rem;
+}
 .align-top {
   vertical-align: top;
 }

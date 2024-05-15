@@ -31,7 +31,12 @@
             } else if ($this->form == "edit_listing") {
                 $result = $this->validate_editlisting($this->data);
             }
-            return $result;
+            
+            if ($result && gettype($result) == 'boolean') {
+                return true;
+            } else {
+                return $result;
+            }
 
         }
 
@@ -56,10 +61,17 @@
                 ],
                 'equals' => [
                     ['password', 'confirm_password']
+                ],
+                'required' => [
+                    ['username'],
+                    ['name'],
+                    ['password'],
+                    ['confirm_password']
                 ]
             ]);
     
-            return $validator->validate();
+            $validation_res = $validator->validate();
+            return $validation_res ? true : $validator->errors();
         }
 
         private function validate_newlisting(array $data) {
@@ -90,7 +102,8 @@
                 ]
             ]);
 
-            return $validator->validate();
+            $validation_res = $validator->validate();
+            return $validation_res ? true : $validator->errors();
         }
 
         private function validate_editlisting(array $data) {
@@ -128,8 +141,19 @@
                 $validator->rule('ascii', 'description');
             }
 
-            return $validator->validate();
+            $validation_res = $validator->validate();
+            return $validation_res ? true : $validator->errors();
         }
     }
 
+    /**
+     * function to check if validation returned a bool or returned an error
+     */
+    function isvalid($result) {
+        if(gettype($result) == 'boolean') {
+            return true;
+        } else {
+            return false;
+        }
+    }
 ?>

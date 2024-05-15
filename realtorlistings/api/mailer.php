@@ -15,7 +15,7 @@
 
         public function __construct(){
             $this->mailer = new PHPMailer(true);
-            $this->mailer->SMTPDebug = SMTP::DEBUG_SERVER;
+            //$this->mailer->SMTPDebug = SMTP::DEBUG_SERVER;
             $this->mailer->isSMTP();
             $this->mailer->Host = $_ENV['MAIL_HOST'];
             $this->mailer->Username = $_ENV['MAIL_USERNAME'];

@@ -122,7 +122,7 @@
         $validator = new FormValidators("register", $data);
         $validation_res = $validator->validate();
 
-        if(gettype($validation_res) == "boolean") { // only returns a boolean if all validation checks returned a success
+        if(isvalid($validation_res)) {
             $pwd = password_hash($data['password'], PASSWORD_DEFAULT);
             $stmt->bind_param('sssss', $data['username'], $data['name'], $pwd, $data['role'], $data['agency']);
         } else {
@@ -162,7 +162,7 @@
         $token = JWT::encode(["data" => $jwt_payload, "expiration_time" => $expiration], "decidelater", 'HS256');
 
 
-        $temp_url = "https://www.realtor-listings.com/confirmacc/$token";
+        $temp_url = "http://localhost:3000/confirmacc/$token";
 
         $name = $data["name"];
         $mail_body = "
@@ -189,7 +189,7 @@
         if(!$res) {
             $response_payload = ["server_error" => "Failed to send email. Try again later."];
             $response->getBody()->write(json_encode($response_payload));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(503);
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(418);
         } else {
             $response_payload = ["success" => "Registration Succesful. Check your email."];
             $response->getBody()->write(json_encode($response_payload));
@@ -308,36 +308,95 @@
             return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
         } else {
             // Image file not found
-            $response->getBody()->write('Image not found');
-            return $response->withStatus(404);
+            return $response->withStatus(404, "Image not found or error in fetching image");
         }
     });
     
 
     $app->post("/listings/filter", function(Request $request, Response $response, array $args) use ($conn, $db_503_or_success){
         if (!$db_503_or_success()) {
-            return $response->withStatus(503);
+            return $response->withStatus(503, "Database connection failed");
         }
 
-        $filters = $request->getParsedBody()['filters'];
-        $saved_res = null;
-
-        for ($i=0; $i < count($filters); $i++) {
-            $filter = $filters[$i];
-            $field = array_keys($filter)[0];
-            $val = $filter[$field];
-
-            if($field == "tags") {
-                $query = "SELECT DISTINCT * FROM `listings` INNER JOIN `tagslist` ON listings.id = tagslist.listing_id INNER JOIN `users` ON listings.realtor_id = users.id WHERE `tagslist`.`tag_id` IN (SELECT `id` FROM `tags` WHERE `name` IN ('" . implode("','", $val) . "')) GROUP BY listings.address";
-                $result = mysqli_query($conn, $query);
-                $saved_res = $result;
+        function get_result_or_null($query_result) {
+            if (mysqli_num_rows($query_result) > 0) {
+                return $query_result;
             } else {
-                $query = "SELECT DISTINCT * FROM `listings` INNER JOIN `tagslist` ON listings.id = tagslist.listing_id INNER JOIN `users` ON listings.realtor_id = users.id WHERE `$field` = '$val' GROUP BY listings.address";
-                $result = mysqli_query($conn, $query);
-                $saved_res = $result;
+                return null;
             }
         }
 
+        function select_stmt(int $index, array $countable_obj, string $stmt1, string $stmt2) {
+            return $index < count($countable_obj) - 1 ? $stmt1 : $stmt2;
+        }
+
+        $parsed_body = $request->getParsedBody();
+
+        if (empty($parsed_body)) {
+            // no filters were passed meaning a reset command was sent
+            $query = "SELECT * FROM `listings` INNER JOIN `users` ON listings.realtor_id = users.id GROUP BY listings.address";
+            $result = mysqli_query($conn, $query);
+            if ($result) {
+                $listings = [];
+                while ($row = mysqli_fetch_assoc($result)) {
+                    $listings[] = $row;
+                }
+            }
+            
+            $response_payload = ["listings" => $listings];
+            $response->getBody()->write(json_encode($response_payload));
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
+        }
+
+        $filters = $parsed_body['filters'];
+        $query = "SELECT * FROM `listings` INNER JOIN `users` ON listings.realtor_id = users.id INNER JOIN `tagslist` ON listings.id = tagslist.listing_id WHERE";
+        $saved_res = null;
+
+        for ($i = 0; $i < count($filters); $i++) {
+            $filter = $filters[$i];
+            $filter_key = array_keys($filter)[0];
+            $val = $filter[$filter_key];
+
+            if($filter_key == "tags") {
+                $id_arr = [];
+                //$query = "SELECT DISTINCT * FROM `listings` INNER JOIN `tagslist` ON listings.id = tagslist.listing_id INNER JOIN `users` ON listings.realtor_id = users.id WHERE `tagslist`.`tag_id` IN (SELECT `id` FROM `tags` WHERE `name` IN ('" . implode("','", $val) . "')) GROUP BY listings.address";
+                $id_query = "SELECT id FROM `tags` WHERE name IN ('" . implode("','", $val) . "')";
+
+                $id_res = mysqli_query($conn, $id_query);
+
+                while ($row = mysqli_fetch_assoc($id_res)) {
+                    foreach ($row as $id) {
+                        $id_arr[] = $id;
+                    }
+                }
+
+                $tag_count = count($id_arr);
+                $id_list = implode(",", $id_arr);
+                $query = select_stmt($i, $filters, $query." listings.id IN (
+                    SELECT listing_id FROM `tagslist` 
+                    WHERE tag_id IN ($id_list) 
+                    GROUP BY listing_id 
+                    HAVING COUNT(DISTINCT tag_id) = $tag_count
+                ) AND", $query." listings.id IN (
+                    SELECT listing_id FROM `tagslist` 
+                    WHERE tag_id IN ($id_list) 
+                    GROUP BY listing_id 
+                    HAVING COUNT(DISTINCT tag_id) = $tag_count
+                )");
+            } else if ($filter_key == "minprice") {
+                $query = select_stmt($i, $filters, $query." price >= $val AND", $query." price >= $val");
+            } else if ($filter_key == "maxprice") {
+                $query = select_stmt($i, $filters, $query." price <= $val AND", $query." price <= $val");
+            } else {
+                $query = select_stmt($i, $filters, $query." $filter_key = '$val' AND", $query." $filter_key = '$val'");
+            }
+        }
+
+        $final_query = $query." GROUP BY listings.address";
+
+        $result = mysqli_query($conn, $final_query);
+        $saved_res = get_result_or_null($result);
+        
         if ($saved_res) {
             $listings = [];
             foreach ($saved_res as $row) {
@@ -347,12 +406,10 @@
             $response->getBody()->write(json_encode($response_payload));
             return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
         } else {
-            $response_payload = ["error" => "SQL query failed. Try again later."];
+            $response_payload = ["listings" => []];
             $response->getBody()->write(json_encode($response_payload));
-            return $response->withHeader('Content-Type', 'application/json')->withStatus(503);
+            return $response->withHeader('Content-Type', 'application/json')->withStatus(200);
         }
-
-
     });
 
     $app->post("/listings/new", function(Request $request, Response $response, array $args) use ($conn, $db_503_or_success){
@@ -379,7 +436,7 @@
         $validator = new FormValidators("new_listing", $data);
         $validation_res = $validator->validate();
 
-        if(gettype($validation_res) == "boolean") {
+        if(isvalid($validation_res)) {
             $uploadedFiles = $request->getUploadedFiles();
             if (isset($uploadedFiles['file']) ){
                 if ($uploadedFiles['file']->getError() === UPLOAD_ERR_OK){
@@ -509,7 +566,7 @@
         $validator = new FormValidators("edit_listing", $data);
         $validation_res = $validator->validate();
 
-        if (gettype($validation_res) == 'boolean') {
+        if (isvalid($validation_res)) {
             if (isset($data['property_name'])) {
                 $property_name = $data['property_name'];
                 
@@ -562,9 +619,7 @@
             }
 
             if (isset($data['price'])) {
-                $_price = $data['price'];
-
-                $price = preg_replace('/(\d)(?=(?:\d{3})+(?!\d))/', '$1,', $_price);
+                $price = intval($data['price']);
     
                 $query = "UPDATE `listings` SET `price` = '$price' WHERE `id` = $listing_id";
                 mysqli_query($conn, $query);
