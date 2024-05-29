@@ -10,8 +10,8 @@ import {
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import $ from "jquery";
-import NavigationBar from "../components/Navbar";
-import TagInput from "../components/tagInput";
+import NavigationBar from "./Navbar";
+import TagInput from "./tagInput";
 import axios, { AxiosResponse } from "axios";
 
 interface Listing {

@@ -4,12 +4,13 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import ConfirmAccount from './pages/ConfirmAcc';
+import ConfirmAccount from './components/ConfirmAcc';
 import Listings from './pages/Listings';
 import CreateListing from './pages/Createlistings';
 import MyDashboard from './pages/MyDashboard';
 import ManageListings from './pages/ManageListings';
-import EditListing from './pages/EditListing';
+import EditListing from './components/EditListing';
+import SeeListings from './components/SeeListing';
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/confirmacc/:ciphered" element={<ConfirmAccount />} />
         <Route path="/listings" Component={Listings} />
         <Route path="/listings/create" Component={CreateListing} />
+        <Route path="/listings/view" element={<SeeListings />} />
         <Route path="/dashboard" Component={MyDashboard} />
         <Route path="/dashboard/listings" Component={ManageListings} />
         <Route path="/dashboard/listings/edit/:id" element={<EditListing />} />

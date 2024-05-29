@@ -4,6 +4,7 @@ import { Label } from 'flowbite-react';
 import NavigationBar from '../components/Navbar';
 import { useCookies } from 'react-cookie';
 import axios, { AxiosResponse } from 'axios';
+import { object } from 'prop-types';
 
 const Login: React.FC = () => {
     const [ cookies, setCookies ] = useCookies(['user']);
@@ -23,8 +24,12 @@ const Login: React.FC = () => {
                 'Content-Type': 'application/json'
             }})
             .then((res: AxiosResponse) => {
-                setCookies('user', res.data, { path: '/' });
-                redirect("/listings");
+                if (typeof res.data === 'object') { // prevents accidental logins in case of error on the backend
+                    setCookies('user', res.data, { path: '/' });
+                    redirect("/listings");
+                } else {
+                    setError("Something went wrong. Try again Later.")
+                }
             })
             .catch((err) => {
                 setError(err.response.data.error);
