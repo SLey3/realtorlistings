@@ -6,9 +6,9 @@ import {
     Select,
     FileInput,
     Label
-} from 'flowbite-react'
+} from 'flowbite-react';
 import { useCookies } from "react-cookie";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import $ from "jquery";
 import NavigationBar from "./Navbar";
 import TagInput from "./tagInput";
@@ -47,7 +47,8 @@ const EditListing: React.FC = () => {
     const [ description, setDescription ] = useState('');
     const [ error, setErrors ] = useState<JSX.Element | null | String>(null);
     const [ tagdisable, setTagDisable ] = useState(true);
-    let params = useParams();
+    const params = useParams();
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get("/api/listings/get/one", {
@@ -170,7 +171,7 @@ const EditListing: React.FC = () => {
             }
         })
         .then((res: AxiosResponse) => {
-            window.location.href = "/dashboard/listings";
+            navigate("/dashboard/listings");
         })
         .catch((err) => {
             setErrors("An error occurred while trying to edit the listing.");
@@ -182,7 +183,7 @@ const EditListing: React.FC = () => {
     }
 
     if (!cookies.user || cookies.user.role !== 'realtor') {
-        window.location.href = "/login";
+        navigate("/login");
     }
 
     return (

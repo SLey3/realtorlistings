@@ -1,5 +1,6 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, FloatingLabel } from 'flowbite-react';
 import { FaSearch } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -15,9 +16,10 @@ const Listings: React.FC = () => {
     const [ listings, setListings ] = useState([{}]);
     const [ searchInput, setSearchInput ] = useState('');
     const [ filterStatus, setFilterStatus ] = useState(false);
+    const navigate = useNavigate();
 
     if (!cookies.user) {
-        window.location.href = "/";
+        navigate("/login");
     }
 
     function handleFilterClick(e: React.MouseEvent<HTMLElement>) {

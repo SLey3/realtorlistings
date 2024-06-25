@@ -25,10 +25,10 @@ const Login: React.FC = () => {
             }})
             .then((res: AxiosResponse) => {
                 if (typeof res.data === 'object') { // prevents accidental logins in case of error on the backend
-                    setCookies('user', res.data, { path: '/' });
+                    setCookies('user', res.data, { path: '/', maxAge: 60 * 59 });
                     redirect("/listings");
                 } else {
-                    setError("Something went wrong. Try again Later.")
+                    setError("Something went wrong. Try again later.")
                 }
             })
             .catch((err) => {

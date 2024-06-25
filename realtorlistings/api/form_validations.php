@@ -30,9 +30,11 @@
                 $result = $this->validate_newlisting($this->data);
             } else if ($this->form == "edit_listing") {
                 $result = $this->validate_editlisting($this->data);
+            } else if ($this->form == "del_acc") {
+                $result = $this->validate_delacc($this->data);
             }
             
-            if ($result && gettype($result) == 'boolean') {
+            if (isvalid($result)) {
                 return true;
             } else {
                 return $result;
@@ -40,6 +42,43 @@
 
         }
 
+        public static function validate_name(string $name) {
+            $validator = new Validator(["name" => $name]);
+            $validator->rule("ascii", "name")->message("Name must be in ASCII characters");
+
+                $validation_res = $validator->validate();
+                return $validation_res ? true : $validator->errors();
+        }
+
+        public static function validate_username(string $username) {
+            $validator = new Validator(["username" => $username]);
+            $validator->rules([
+                'email' => [
+                    ['username']
+                ],
+                'emailDNS' => [
+                    ['username']
+                ]
+            ]);
+
+            $validation_res = $validator->validate();
+            return $validation_res ? true : $validator->errors();
+        }
+
+        public static function validate_password(string $pwd) {
+            $validator = new Validator(["pwd" => $pwd]);
+            $validator->rules([
+                'specialChars' => [
+                    ['pwd']
+                ],
+                'lengthBetween' => [
+                    ['pwd', 8, 31]
+                ]
+            ]);
+
+            $validation_res = $validator->validate();
+            return $validation_res ? true : $validator->errors();
+        }
 
         private function validate_registration(array $data) {
             $validator = new Validator($data);
@@ -140,6 +179,15 @@
             if (isset($data['description'])) {
                 $validator->rule('ascii', 'description');
             }
+
+            $validation_res = $validator->validate();
+            return $validation_res ? true : $validator->errors();
+        }
+
+        private function validate_delacc(array $data) {
+            $validator = new Validator($data);
+            $validator->rule("equals", "confirmation", "answer")->message("Response did not match the confirmation message");
+            $validator->setPrependLabels(false);
 
             $validation_res = $validator->validate();
             return $validation_res ? true : $validator->errors();

@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FloatingLabel,
          Select, 
          Label, 
@@ -30,6 +30,7 @@ const CreateListing: React.FC = () => {
     const [ file, setFile ] =  useState<null | Blob>(null);
     const [ desc, setDesc ] = useState('');
     const [ error, setErrors ] = useState<JSX.Element | null | String>(null);
+    const navigate = useNavigate();
 
     function handleFormSubmit (e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
@@ -121,7 +122,7 @@ const CreateListing: React.FC = () => {
     }
 
     if (!cookies.user && cookies.user.role === "realtor") {
-        window.location.href = "/";
+        navigate("/");
     }
 
     return (

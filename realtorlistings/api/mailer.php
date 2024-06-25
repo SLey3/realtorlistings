@@ -1,6 +1,5 @@
 <?php
     use PHPMailer\PHPMailer\PHPMailer;
-    use PHPMailer\PHPMailer\SMTP;
     use PHPMailer\PHPMailer\Exception;
     use Dotenv\Dotenv;
 
@@ -12,13 +11,14 @@
 
     class MailerHandler {
         private $mailer;
+        public static $acc_email;
 
         public function __construct(){
+            $this::$acc_email = $_ENV['MAIL_USERNAME'];
             $this->mailer = new PHPMailer(true);
-            //$this->mailer->SMTPDebug = SMTP::DEBUG_SERVER;
             $this->mailer->isSMTP();
             $this->mailer->Host = $_ENV['MAIL_HOST'];
-            $this->mailer->Username = $_ENV['MAIL_USERNAME'];
+            $this->mailer->Username = $this::$acc_email;
             $this->mailer->Password = $_ENV['MAIL_PWD'];
             $this->mailer->Port = $_ENV['MAIL_PORT'];
             $this->mailer->SMTPAuth = true;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
 import NavigationBar from "../components/Navbar";
@@ -17,9 +18,10 @@ const ManageListings: React.FC = () => {
     const [ cookies ] = useCookies(['user']);
     const [ listings, setListings ] = useState<listings[]>([]);
     const [ loading, setLoading ] = useState(true);
+    const navigate = useNavigate();
 
     if (!cookies.user || cookies.user.role !== 'realtor') {
-        window.location.href = "/login";
+        navigate("/login");
     }
 
     useEffect(() => {

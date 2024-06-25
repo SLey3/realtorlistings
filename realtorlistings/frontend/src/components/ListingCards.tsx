@@ -100,8 +100,8 @@ const ListingCard: React.FC<ListingCardProps> = ({ listing }) => {
                     <div className="flex flex-col">
                         <h6 className="mb-2 text-sm font-semibold underline text-slate-600 dark:text-white leading-tight">Tags:</h6>
                         <div className="grid grid-cols-2 gap-2">
-                            {Array.isArray(tags) && tags.map((tag) => (
-                                <Badge key={tag} color="indigo">
+                            {Array.isArray(tags) && tags.map((tag, k) => (
+                                <Badge key={k} color="indigo">
                                     {tag}
                                 </Badge>
                             ))}

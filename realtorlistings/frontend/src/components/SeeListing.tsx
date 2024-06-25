@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useSearchParams, Link } from 'react-router-dom';
+import { useSearchParams, useNavigate } from 'react-router-dom';
 import { Badge } from 'flowbite-react';
 import { useCookies } from 'react-cookie';
 import NavigationBar from './Navbar';
@@ -30,6 +30,11 @@ const SeeListings: React.FC = () => {
     const [ loading, setLoading ] = useState(true);
     const [ searchParams ] = useSearchParams();
     const [ cookies ] = useCookies(['user']);
+    const navigate = useNavigate();
+
+    if(!cookies.user) {
+        navigate("/login");
+    }
 
     useEffect(() => {
         let id = searchParams.get("id");
@@ -60,7 +65,6 @@ const SeeListings: React.FC = () => {
             }
         })
         .then((res: AxiosResponse) => {
-            console.log("Image data: ", res.data.image);
             setImg("data:image/png;base64," + res.data.image);
         })
         .catch((err: AxiosError) => {
@@ -76,7 +80,6 @@ const SeeListings: React.FC = () => {
             }
         })
         .then((res: AxiosResponse) => {
-            console.log("tag data: ", res.data.tags);
             setTags(res.data.tags);
         })
         .catch((err: AxiosError) => {
@@ -86,8 +89,6 @@ const SeeListings: React.FC = () => {
             setLoading(false);
         });
     }, [listing]);
-
-    console.log("If assigning a value to the state listing and undefined should not appear when printed: ", listing);
 
     if (loading) {
         return (
@@ -129,7 +130,7 @@ const SeeListings: React.FC = () => {
                 </div>
                 <div>
                     <h2 className="text-xl text-slate-300 dark:text-white border-b-2">Price:</h2>
-                    <p className="pt-3 text-lg text-slate-200 dark:text-white subpixel-antialiased">${(listing as Listing).price}</p>
+                    <p className="pt-3 text-lg text-slate-200 dark:text-white subpixel-antialiased">${`${(listing as Listing).price}`.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</p>
                 </div>
                 <div>
                     <h2 className="text-xl text-slate-300 dark:text-white border-b-2">Status:</h2>

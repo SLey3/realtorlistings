@@ -4,13 +4,14 @@ import Home from './pages/Home';
 import About from './pages/About';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import ConfirmAccount from './components/ConfirmAcc';
 import Listings from './pages/Listings';
 import CreateListing from './pages/Createlistings';
 import MyDashboard from './pages/MyDashboard';
+import ManageAccount from './pages/ManageAccount';
 import ManageListings from './pages/ManageListings';
 import EditListing from './components/EditListing';
 import SeeListings from './components/SeeListing';
+import ConfirmAccount from './components/ConfirmAcc';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/listings/create" Component={CreateListing} />
         <Route path="/listings/view" element={<SeeListings />} />
         <Route path="/dashboard" Component={MyDashboard} />
+        <Route path="/dashboard/manageacc" Component={ManageAccount} />
         <Route path="/dashboard/listings" Component={ManageListings} />
         <Route path="/dashboard/listings/edit/:id" element={<EditListing />} />
       </Routes>
