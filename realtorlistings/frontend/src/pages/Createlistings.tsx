@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { redirect } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FloatingLabel,
          Select, 
          Label, 
@@ -7,8 +7,8 @@ import { FloatingLabel,
          Textarea,
          Button } from 'flowbite-react';
 import { useCookies } from 'react-cookie';
-import NavigationBar from './Navbar';
-import TagInput from './tagInput';
+import NavigationBar from '../components/Navbar';
+import TagInput from '../components/tagInput';
 import axios from 'axios';
 import countries from '../assets/data/countries';
 import states from '../assets/data/states';
@@ -30,6 +30,7 @@ const CreateListing: React.FC = () => {
     const [ file, setFile ] =  useState<null | Blob>(null);
     const [ desc, setDesc ] = useState('');
     const [ error, setErrors ] = useState<JSX.Element | null | String>(null);
+    const navigate = useNavigate();
 
     function handleFormSubmit (e: React.FormEvent<HTMLFormElement>){
         e.preventDefault();
@@ -47,7 +48,7 @@ const CreateListing: React.FC = () => {
             state: state,
             country: country,
             type: property_type,
-            price: price,
+            price: parseInt(price),
             url: url,
             tags: tags,
             desc: desc
@@ -121,7 +122,7 @@ const CreateListing: React.FC = () => {
     }
 
     if (!cookies.user && cookies.user.role === "realtor") {
-        window.location.href = "/";
+        navigate("/");
     }
 
     return (
@@ -199,7 +200,7 @@ const CreateListing: React.FC = () => {
                         <FloatingLabel id="property-status-input" variant="outlined" label="Property Status" value="sale" disabled />
                     </div>
                     <div id="price">
-                        <FloatingLabel id="price-input" variant="outlined" label="Price" value={price} onChange={(e) => {setPrice(e.target.value)}} required />
+                        <FloatingLabel id="price-input" variant="outlined" label="Price" value={price} onChange={(e) => {setPrice(e.target.value.replace(/[^0-9.-]/g, ''))}} required />
                     </div>
                     <div id="url">
                         <FloatingLabel id="url" variant="outlined" label="Listing Url on Agency Website" value={url} onChange={(e) => {setUrl(e.target.value)}} required />

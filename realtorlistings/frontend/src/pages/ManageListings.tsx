@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import { FaPencilAlt, FaRegTrashAlt } from "react-icons/fa";
-import NavigationBar from "./Navbar";
+import NavigationBar from "../components/Navbar";
 import axios, { AxiosResponse } from "axios";
 
 
@@ -17,9 +18,10 @@ const ManageListings: React.FC = () => {
     const [ cookies ] = useCookies(['user']);
     const [ listings, setListings ] = useState<listings[]>([]);
     const [ loading, setLoading ] = useState(true);
+    const navigate = useNavigate();
 
     if (!cookies.user || cookies.user.role !== 'realtor') {
-        window.location.href = "/login";
+        navigate("/login");
     }
 
     useEffect(() => {
@@ -130,7 +132,7 @@ const ManageListings: React.FC = () => {
                                             {listing.address}
                                         </td>
                                         <td className="px-6 py-4">
-                                            ${listing.price}
+                                            {`$${listing.price.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`}
                                         </td>
                                         <td className="px-6 py-4">
                                             {listing.created_at}

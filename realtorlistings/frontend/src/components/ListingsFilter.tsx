@@ -42,7 +42,7 @@ const ListingsFilters: React.FC<FilterProps> = ({ handleSubmit }) => {
         setMinPriceRange("10000");
         setMaxPriceRange("10000000");
         // handle listings reset
-        handleSubmit(e, []);
+        handleSubmit(e, [], true);
     }
 
     function handleFilterClick (e: React.MouseEvent<HTMLElement>)  {
@@ -56,7 +56,7 @@ const ListingsFilters: React.FC<FilterProps> = ({ handleSubmit }) => {
             filters.push({"zip" : zip});
         }
         if (state !== 'default') {
-            filters.push({"zip" : state});
+            filters.push({"state" : state});
         }
         if (agency !== '') {
             filters.push({"agency" : agency});
@@ -64,7 +64,10 @@ const ListingsFilters: React.FC<FilterProps> = ({ handleSubmit }) => {
         if (tags.length > 0) {
             filters.push({"tags" : tags});
         }
-        filters.push([minpriceRange, maxpriceRange]); 
+
+        filters.push({"minprice": parseInt(minpriceRange)});
+        filters.push({"maxprice": parseInt(maxpriceRange)});
+
         handleSubmit(e, filters);
       }
 

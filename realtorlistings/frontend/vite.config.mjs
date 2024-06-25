@@ -10,9 +10,10 @@ export default defineConfig({
         open: true,
         // this sets a default port to 3000  
         port: 3000, 
+        // proxy configuration used only for development. Production proxy setup found in vercel.json
         // proxy: {
         //     '/api' : {
-        //         target: 'https://api.realtor-listings.com',
+        //         target: 'http://localhost:8000',
         //         changeOrigin: true,
         //         rewrite: (path) => path.replace(/^\/api/, ''),
         //     }

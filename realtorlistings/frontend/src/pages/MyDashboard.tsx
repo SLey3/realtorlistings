@@ -1,14 +1,15 @@
 import React from "react";
 import { useCookies } from "react-cookie";
-import { Link } from "react-router-dom";
-import NavigationBar from "./Navbar";
+import { Link, useNavigate } from "react-router-dom";
+import NavigationBar from "../components/Navbar";
 
 
 const MyDashboard: React.FC = () => {
     const [ cookies ] = useCookies(['user']);
+    const navigate = useNavigate();
 
     if (!cookies.user) {
-        window.location.href = "/login";   
+        navigate("/login");   
     }
 
     return (
@@ -46,7 +47,7 @@ const MyDashboard: React.FC = () => {
                     <div className="bg-gray-200 p-4 rounded-lg">
                         <h2 className="text-xl font-bold">My Account</h2>
                         <p className="text-sm">Manage your account</p>
-                        <Link to="#" className="bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block">Manage Account (Coming Soon)</Link>
+                        <Link to="/dashboard/manageacc" className="bg-blue-500 text-white px-4 py-2 rounded mt-4 inline-block">Manage Account</Link>
                     </div>
                 </div>
             </div>

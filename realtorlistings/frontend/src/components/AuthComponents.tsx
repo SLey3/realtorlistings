@@ -1,6 +1,6 @@
 import React from 'react';
 import { Navbar } from 'flowbite-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 interface logoutProps {
@@ -21,14 +21,17 @@ export const LoginLink: React.FC<loginProps> = ({ class_str }) => {
     )
 }
 
-export const LogOutLink: React.FC<logoutProps> = ({logoutHandler}) => {
+export const LogOutLink: React.FC<logoutProps> = ({ logoutHandler }) => {
+    const navigate = useNavigate();
+
     const handleLogout = () => {
         logoutHandler();
+        navigate("/");
     };
 
     return (
         <>
-            <Navbar.Link href="#" onClick={handleLogout}>
+            <Navbar.Link href="#" className="-translate-x-3 lg:translate-x-0" onClick={handleLogout}>
                 Logout
             </Navbar.Link>
         </>
